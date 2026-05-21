@@ -1,9 +1,9 @@
 import Fastify from "fastify";
 import "dotenv/config";
 import type { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
-import { agentModule } from "@/modules/agent";
-import { testModule } from "@/modules/test";
-import { userModule } from "@/modules/user";
+import agentModule from "@/modules/agent";
+import testModule from "@/modules/test";
+import userModule from "@/modules/user";
 
 export async function buildApp() {
   const app = Fastify({

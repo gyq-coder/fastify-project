@@ -2,7 +2,7 @@ import { buildUserProfile } from "./service";
 import { createUserRouteSchema } from "./schema";
 import type { FastifyTypeBox } from "./types";
 
-function userRoutes(fastify: FastifyTypeBox) {
+export function userRoutes(fastify: FastifyTypeBox) {
   fastify.addHook("onRequest", async (request) => {
     console.log("Received request:", {
       method: request.method,
@@ -22,6 +22,3 @@ function userRoutes(fastify: FastifyTypeBox) {
     },
   );
 }
-
-export { userRoutes };
-export default userRoutes;

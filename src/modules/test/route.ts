@@ -2,7 +2,7 @@ import { runTestFlow } from "./service";
 import { testRouteSchema } from "./schema";
 import type { FastifyTypeBox } from "./types";
 
-function testRoutes(fastify: FastifyTypeBox) {
+export function testRoutes(fastify: FastifyTypeBox) {
   fastify.get(
     "/test",
     {
@@ -14,6 +14,3 @@ function testRoutes(fastify: FastifyTypeBox) {
     },
   );
 }
-
-export { testRoutes };
-export default testRoutes;
