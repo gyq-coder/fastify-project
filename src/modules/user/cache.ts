@@ -22,3 +22,12 @@ export async function getCachedUserById(userId: number): Promise<CreateUserRespo
 
   return JSON.parse(cachedUser) as CreateUserResponse;
 }
+
+export async function cacheUpdatedUser(user: CreateUserResponse) {
+  return cacheCreatedUser(user);
+}
+
+export async function invalidateUserCache(userId: number) {
+  const cacheKey = getUserCacheKey(userId);
+  await redis.del(cacheKey);
+}

@@ -27,3 +27,12 @@ export interface CreateUserResponse extends CreateUserQuery {
 export interface GetUserByIdParams {
   id: string;
 }
+
+export interface UpdateUserQuery {
+  name?: string;
+  email?: string;
+}
+
+export interface UpdateUserParams {
+  id: string;
+}

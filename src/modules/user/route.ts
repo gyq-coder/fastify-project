@@ -1,5 +1,10 @@
-import { createUserProfile, getAllUserProfiles, getUserProfileById } from "./service";
-import { createUserRouteSchema, getUserByIdRouteSchema } from "./schema";
+import {
+  createUserProfile,
+  getAllUserProfiles,
+  getUserProfileById,
+  updateUserProfile,
+} from "./service";
+import { createUserRouteSchema, getUserByIdRouteSchema, updateUserRouteSchema } from "./schema";
 import type { FastifyTypeBox, GetUserByIdParams } from "./types";
 
 export function userRoutes(fastify: FastifyTypeBox) {
@@ -16,7 +21,7 @@ export function userRoutes(fastify: FastifyTypeBox) {
   });
 
   fastify.get<{ Params: GetUserByIdParams }>(
-    "/:id",
+    "/get/:id",
     { schema: getUserByIdRouteSchema },
     async (request, reply) => {
       const userId = Number(request.params.id);
@@ -29,4 +34,16 @@ export function userRoutes(fastify: FastifyTypeBox) {
       return reply.send(user);
     },
   );
+
+  fastify.put("/update/:id", { schema: updateUserRouteSchema }, async (request, reply) => {
+    const userId = Number(request.params.id);
+    const query = request.body;
+    const updatedUser = await updateUserProfile(userId, query, request.log);
+
+    if (!updatedUser) {
+      return reply.code(404).send({ message: "User not found" });
+    }
+
+    return reply.send(updatedUser);
+  });
 }

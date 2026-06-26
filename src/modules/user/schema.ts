@@ -46,3 +46,32 @@ export const getUserByIdRouteSchema = {
     404: notFoundResponseSchema,
   },
 };
+
+export const updateUserQuerySchema = Type.Object({
+  name: Type.Optional(
+    Type.String({
+      description: "用户名",
+    }),
+  ),
+  email: Type.Optional(
+    Type.String({
+      description: "邮箱",
+    }),
+  ),
+});
+
+export const updateUserParamsSchema = Type.Object({
+  id: Type.String({
+    description: "用户 ID",
+    pattern: "^[0-9]+$",
+  }),
+});
+
+export const updateUserRouteSchema = {
+  params: updateUserParamsSchema,
+  body: updateUserQuerySchema,
+  response: {
+    200: userResponseSchema,
+    404: notFoundResponseSchema,
+  },
+};

@@ -1,7 +1,12 @@
 import type { FastifyBaseLogger } from "fastify";
-import type { CreateUserQuery, CreateUserResponse } from "./types";
-import { cacheCreatedUser, getCachedUserById } from "./cache";
-import { createUser, getAllUsers, getUserById } from "./repository";
+import type { CreateUserQuery, CreateUserResponse, UpdateUserQuery } from "./types";
+import {
+  cacheCreatedUser,
+  cacheUpdatedUser,
+  getCachedUserById,
+  invalidateUserCache,
+} from "./cache";
+import { createUser, getAllUsers, getUserById, updateUser } from "./repository";
 
 export async function createUserProfile(
   query: CreateUserQuery,
@@ -38,4 +43,27 @@ export async function getUserProfileById(userId: number): Promise<CreateUserResp
 
   await cacheCreatedUser(user);
   return user;
+}
+
+export async function updateUserProfile(
+  userId: number,
+  query: UpdateUserQuery,
+  logger?: FastifyBaseLogger,
+): Promise<CreateUserResponse | null> {
+  const existingUser = await getUserById(userId);
+
+  if (!existingUser) {
+    return null;
+  }
+
+  const updatedUser = await updateUser(userId, query);
+
+  try {
+    await invalidateUserCache(userId);
+    await cacheUpdatedUser(updatedUser);
+  } catch (error) {
+    logger?.warn({ error, userId }, "failed to update user cache");
+  }
+
+  return updatedUser;
 }

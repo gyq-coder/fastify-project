@@ -7,7 +7,6 @@ import swaggerUi from "@fastify/swagger-ui";
 import formbody from "@fastify/formbody";
 import multipart from "@fastify/multipart";
 import helmet from "@fastify/helmet";
-import agentModule from "@/modules/agent";
 import userModule from "@/modules/user";
 
 export async function buildApp(options: FastifyServerOptions = {}) {
@@ -24,7 +23,6 @@ export async function buildApp(options: FastifyServerOptions = {}) {
   await app.register(multipart);
 
   await app.register(userModule, { prefix: "/users" });
-  await app.register(agentModule, { prefix: "/agents" });
 
   return app;
 }
