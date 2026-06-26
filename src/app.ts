@@ -1,4 +1,3 @@
-import "dotenv/config";
 import Fastify from "fastify";
 import type { FastifyServerOptions } from "fastify";
 import type { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";

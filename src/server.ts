@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { buildApp } from "./app";
 
 const app = await buildApp({
@@ -17,10 +18,9 @@ const app = await buildApp({
       : true,
 });
 
-app.listen({ port: 3000 }, function (err, address) {
+app.listen({ port: 3000 }, function (err) {
   if (err) {
     app.log.error(err);
     process.exit(1);
   }
-  app.log.info(`Server is now listening on ${address}`);
 });
